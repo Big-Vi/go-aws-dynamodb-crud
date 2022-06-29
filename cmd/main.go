@@ -1,6 +1,8 @@
 package main
 
 import (
+	// "context"
+	// "fmt"
 	"log"
 	"net/http"
 
@@ -9,6 +11,27 @@ import (
 )
 
 func main() {
+	// out, err := svc.CreateTable(context.TODO(), &dynamodb.CreateTableInput{
+    //     AttributeDefinitions: []types.AttributeDefinition{
+    //         {
+    //             AttributeName: aws.String("id"),
+    //             AttributeType: types.ScalarAttributeTypeS,
+    //         },
+    //     },
+    //     KeySchema: []types.KeySchemaElement{
+    //         {
+    //             AttributeName: aws.String("id"),
+    //             KeyType:       types.KeyTypeHash,
+    //         },
+    //     },
+    //     TableName:   aws.String("my-table"),
+    //     BillingMode: types.BillingModePayPerRequest,
+    // })
+    // if err != nil {
+    //     panic(err)
+    // }
+	// fmt.Print(out)
+
 	r := mux.NewRouter()
 	routes.RegisterRoutes(r)
 	http.Handle("/", r)
