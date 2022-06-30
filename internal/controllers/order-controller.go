@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	"net/http"
 	"encoding/json"
+	// "fmt"
+	"net/http"
 
 	"github.com/big-vi/go-aws-dynamodb-crud/internal/models"
+	"github.com/gorilla/mux"
 )
-
-var Orders models.Order
 
 func GetOrders(w http.ResponseWriter, r *http.Request) {
 	orders := models.GetOrders()
@@ -17,11 +17,18 @@ func GetOrders(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
-func CreateOrder(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Gorilla!\n"))
+func GetOrderById(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	order := models.GetOrderById(id)
+
+	res, _ := json.Marshal(order)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)
 }
 
-func GetOrderById(w http.ResponseWriter, r *http.Request) {
+func CreateOrder(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Gorilla!\n"))
 }
 
