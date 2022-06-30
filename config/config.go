@@ -2,7 +2,6 @@ package config
 
 import (
 	"github.com/aws/aws-sdk-go-v2/config"
-	// "github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"context"
 
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
@@ -17,6 +16,6 @@ func ConnectDynamoDB() *dynamodb.Client  {
 		panic(err)
 	}
 
-	svc := dynamodb.NewFromConfig(cfg)
-	return svc
+	dynamodbClient := dynamodb.NewFromConfig(cfg)
+	return dynamodbClient
 }
