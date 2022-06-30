@@ -65,3 +65,17 @@ func GetOrderById(Id string) Order {
 
 	return order
 }
+
+func DeleteOrder(Id string) *dynamodb.DeleteItemOutput {
+	result, err := dynamodbClient.DeleteItem(context.TODO(), &dynamodb.DeleteItemInput{
+        TableName: aws.String("my-table"),
+        Key: map[string]types.AttributeValue{
+            "id": &types.AttributeValueMemberS{Value: Id},
+        },
+    })
+    if err != nil {
+        panic(err)
+    }
+
+    return result
+}

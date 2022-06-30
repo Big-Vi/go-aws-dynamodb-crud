@@ -37,5 +37,10 @@ func UpdateOrder(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteOrder(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Gorilla!\n"))
+	vars := mux.Vars(r)
+	id := vars["id"]
+	models.DeleteOrder(id)	
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Item deleted"))
 }
