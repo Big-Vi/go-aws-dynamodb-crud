@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/big-vi/go-aws-dynamodb-crud/config"
+	"github.com/google/uuid"
 )
 
 var dynamodbClient *dynamodb.Client
@@ -73,6 +74,23 @@ func DeleteOrder(Id string) *dynamodb.DeleteItemOutput {
             "id": &types.AttributeValueMemberS{Value: Id},
         },
     })
+    if err != nil {
+        panic(err)
+    }
+
+    return result
+}
+
+func CreateOrder() *dynamodb.PutItemOutput {
+	id := uuid.New()
+	result, err := dynamodbClient.PutItem(context.TODO(), &dynamodb.PutItemInput{
+        TableName: aws.String("my-table"),
+        Item: map[string]types.AttributeValue{
+			"id":    &types.AttributeValueMemberS{Value: id.String()},
+            "title":  &types.AttributeValueMemberS{Value: "John Doe"},
+        },
+    })
+
     if err != nil {
         panic(err)
     }
