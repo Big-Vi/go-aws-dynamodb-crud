@@ -7,8 +7,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 
-	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
+	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"github.com/big-vi/go-aws-dynamodb-crud/config"
 	"github.com/google/uuid"
 )
@@ -46,16 +46,16 @@ func GetOrders() []Order {
 
 func GetOrderById(Id string) Order {
 	result, err := dynamodbClient.GetItem(context.TODO(), &dynamodb.GetItemInput{
-        TableName: aws.String("my-table"),
-        Key: map[string]types.AttributeValue{
-            "id": &types.AttributeValueMemberS{Value: Id},
-        },
-    })
+		TableName: aws.String("my-table"),
+		Key: map[string]types.AttributeValue{
+			"id": &types.AttributeValueMemberS{Value: Id},
+		},
+	})
 
-    if err != nil {
-        panic(err)
-    }
-	
+	if err != nil {
+		panic(err)
+	}
+
 	var order Order
 
 	err = attributevalue.UnmarshalMap(result.Item, &order)
@@ -69,31 +69,47 @@ func GetOrderById(Id string) Order {
 
 func DeleteOrder(Id string) *dynamodb.DeleteItemOutput {
 	result, err := dynamodbClient.DeleteItem(context.TODO(), &dynamodb.DeleteItemInput{
-        TableName: aws.String("my-table"),
-        Key: map[string]types.AttributeValue{
-            "id": &types.AttributeValueMemberS{Value: Id},
-        },
-    })
-    if err != nil {
-        panic(err)
-    }
+		TableName: aws.String("my-table"),
+		Key: map[string]types.AttributeValue{
+			"id": &types.AttributeValueMemberS{Value: Id},
+		},
+	})
+	if err != nil {
+		panic(err)
+	}
 
-    return result
+	return result
 }
 
 func CreateOrder() *dynamodb.PutItemOutput {
 	id := uuid.New()
 	result, err := dynamodbClient.PutItem(context.TODO(), &dynamodb.PutItemInput{
-        TableName: aws.String("my-table"),
-        Item: map[string]types.AttributeValue{
+		TableName: aws.String("my-table"),
+		Item: map[string]types.AttributeValue{
 			"id":    &types.AttributeValueMemberS{Value: id.String()},
-            "title":  &types.AttributeValueMemberS{Value: "John Doe"},
-        },
-    })
+			"title": &types.AttributeValueMemberS{Value: "John Doe"},
+		},
+	})
 
-    if err != nil {
-        panic(err)
-    }
+	if err != nil {
+		panic(err)
+	}
 
-    return result
+	return result
+}
+
+func UpdateOrder(Id string) *dynamodb.PutItemOutput {
+	result, err := dynamodbClient.PutItem(context.TODO(), &dynamodb.PutItemInput{
+		TableName: aws.String("my-table"),
+		Item: map[string]types.AttributeValue{
+			"id": &types.AttributeValueMemberS{Value: Id},
+			"title": &types.AttributeValueMemberS{Value: "Peter"},
+		},
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	return result
 }
