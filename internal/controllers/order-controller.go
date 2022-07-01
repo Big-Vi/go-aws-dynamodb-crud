@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	// "fmt"
 	"net/http"
 
 	"github.com/big-vi/go-aws-dynamodb-crud/internal/models"

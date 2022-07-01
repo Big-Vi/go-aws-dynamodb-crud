@@ -4,12 +4,12 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/big-vi/go-aws-dynamodb-crud/config"
+
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	"github.com/big-vi/go-aws-dynamodb-crud/config"
 	"github.com/google/uuid"
 )
 
